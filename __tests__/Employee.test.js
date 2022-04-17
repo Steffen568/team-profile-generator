@@ -10,7 +10,7 @@ it(`Creates an Employee object with name, id, and email`, () => {
 
 it(`Retutns employee object`, () => {
     const employee = new Employee(`stef`, `789`, `test@gmail.com`)
-    expect(employee.genPosition()).toEqual(Employee)
+    expect(employee.getRole()).toEqual(Employee)
 })
 
 it(`Returns the name of an Employee`, () => {
