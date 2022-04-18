@@ -1,6 +1,6 @@
 const Supervisor = require("../lib/Manager")
 
-const genHtmlTemplate = employeeCards => {
+const genHtmlTemplate = teamCard => {
     return `
     <!DOCTYPE html>
 <html lang="en">
@@ -30,7 +30,7 @@ const employeeArray = data => {
     objectArray = []
 
     for(let i = 0; i <data.length; i++) {
-        const employee = data[i]
+        let employee = data[i]
         const title = employee.getRole()
 
         if(title === 'Supervisor') {
@@ -47,7 +47,7 @@ const employeeArray = data => {
         }
     }
     const teamCard = objectArray.join('')
-    const genTeamHtml = genHtmlTemplate(employee)
+    const genTeamHtml = genHtmlTemplate(teamCard)
     return genTeamHtml
 }
 
@@ -122,3 +122,5 @@ const genIntern = intern => {
     </div>
     `
 }
+
+module.exports = employeeArray

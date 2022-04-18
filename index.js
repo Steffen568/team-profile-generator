@@ -6,6 +6,7 @@ const Engineer = require('./lib/Engineer')
 const Intern = require('./lib/Intern')
 const { title } = require('process')
 const htmlTemplate = require('./src/htmlTemp')
+const employeeArray = require('./src/htmlTemp')
 
 let teamInfo = []
 
@@ -36,6 +37,8 @@ const genManager = () => {
         const supervisor = new Supervisor(name, id, email, office)
 
         teamInfo.push(supervisor)
+        genEmployee()
+        return teamInfo
     })
 }
 
@@ -66,28 +69,22 @@ const genEmployee = () => {
             type: 'input',
             name: 'github',
             message: `Enter engineer's github account`,
-            validate: githubInput => {
-                if(githubInput === true) {
-                    input.title = 'Engineer'
-                } else {
-                    return
-                }
-            }
+            when: (input) => input.title === 'Engineer'
         },
         {
             type: 'input',
             name: 'school',
             message: `Enter school Inter is attending`,
-            validate: schoolInput => {
-                if(schoolInput === true) {
-                    input.title = 'Intern'
-                } else {
-                    return
-                }
-            }
+            when: (input) => input.title === 'Intern'
+        },
+        {
+            type: 'confirm',
+            name: 'confirmPrompt',
+            message: `Would you like to add another Employee?`,
+            default: false
         }
     ]).then(employeeInfo => {
-        let {name, id, email, github, school} = employeeInfo
+        let {name, id, email, github, school}  = employeeInfo 
         let employee
 
         if(title === 'Engineer') {
@@ -96,13 +93,16 @@ const genEmployee = () => {
             employee = new Intern (name, id, email, school)
         }
 
-        teamInfo.push(employee)
-        console.log(teamInfo)
+        if (confirmPrompt) {
+            return genEmployee()
+        } else {
+            return teamInfo
+        }
     })
     
 }
 
-const genHTML = fileContent => {
+const genFile = fileContent => {
     fs.writeFile('./dist/index.html', fileContent, err => {
         if (err) {
             console.log(`HTML GEN ERROR`)
@@ -114,8 +114,8 @@ const genHTML = fileContent => {
 
 genManager()
     .then(teamInfo => {
-        return genHTML(teamInfo)
+        return employeeArray(teamInfo)
     })
     .then(pageHTML => {
-        return genHTML(pageHTML)
+        return genFile(pageHTML)
     })
