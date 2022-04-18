@@ -1,10 +1,11 @@
 const inquirer = require('inquirer')
 const fs = require('fs')
 
-const Manager = require('./lib/Manager')
+const Supervisor = require('./lib/Manager')
 const Engineer = require('./lib/Engineer')
 const Intern = require('./lib/Intern')
 const { title } = require('process')
+const htmlTemplate = require('./src/htmlTemp')
 
 let teamInfo = []
 
@@ -32,9 +33,9 @@ const genManager = () => {
         }
     ]).then(managerInfo => {
         const {name, id, email, office} = managerInfo
-        const manager = new Manager(name, id, email, office)
+        const supervisor = new Supervisor(name, id, email, office)
 
-        teamInfo.push(manager)
+        teamInfo.push(supervisor)
     })
 }
 
