@@ -58,7 +58,7 @@ const genSupervisor = supervisor => {
             <h3 class='w3-center'>${supervisor.name}</h3>
             <h4 class='w3-center'>Supervisor</h4>
         </header>
-        <div class='w3-container'>
+        <div class='w3-container w3-center'>
             <p>
                 ID: ${supervisor.id}
             </p>
@@ -82,7 +82,7 @@ const genEngineer = engineer => {
             <h3 class='w3-center'>${engineer.name}</h3>
             <h4 class='w3-center'>Engineer</h4>
         </header>
-        <div class='w3-container'>
+        <div class='w3-container w3-center'>
             <p>
                 ID: ${engineer.id}
             </p>
@@ -106,7 +106,7 @@ const genIntern = intern => {
             <h3 class='w3-center'>${intern.name}</h3>
             <h4 class='w3-center'>Intern</h4>
         </header>
-        <div class='w3-container'>
+        <div class='w3-container w3-center'>
             <p>
                 ID: ${intern.id}
             </p>
