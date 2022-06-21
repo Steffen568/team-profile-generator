@@ -7,6 +7,7 @@ const Intern = require('./lib/Intern')
 const { title } = require('process')
 const htmlTemplate = require('./src/htmlTemp')
 const employeeArray = require('./src/htmlTemp')
+const ConfirmPrompt = require('inquirer/lib/prompts/confirm')
 
 let teamInfo = []
 
@@ -15,7 +16,7 @@ const genManager = () => {
         {
             type: 'input',
             name: 'name',
-            message: 'Please enter the name of your Supervisor'
+            message: 'Please enter the name of Supervisor'
         },
         {
             type: 'input',
@@ -66,40 +67,45 @@ const genEmployee = () => {
             message: `Enter employee's email adress`
         },
         {
+            when: (input) => input.position === 'Engineer',
             type: 'input',
             name: 'github',
             message: `Enter engineer's github account`,
-            when: (input) => input.title === 'Engineer'
+            
         },
         {
+            when: (input) => input.position === 'Intern',
             type: 'input',
             name: 'school',
             message: `Enter school Inter is attending`,
-            when: (input) => input.title === 'Intern'
+            
         },
         {
             type: 'confirm',
-            name: 'confirmPrompt',
+            name: 'nextEmp',
             message: `Would you like to add another Employee?`,
             default: false
         }
     ]).then(employeeInfo => {
-        let {name, id, email, github, school}  = employeeInfo 
+        let {name, id, email, github, school, nextEmp}  = employeeInfo 
         let employee
 
-        if(title === 'Engineer') {
+        if(employeeInfo.position === 'Engineer') {
             employee = new Engineer (name, id, email, github)
-        } else if (title === 'Inter') {
+        } else if (employeeInfo.position === 'Intern') {
             employee = new Intern (name, id, email, school)
         }
+        
+        teamInfo.push(employee)
 
-        if (confirmPrompt) {
+        if (employeeInfo.nextEmp) {
             return genEmployee()
         } else {
+            genFile()
             return teamInfo
         }
+        
     })
-    
 }
 
 const genFile = fileContent => {
@@ -116,6 +122,6 @@ genManager()
     .then(teamInfo => {
         return employeeArray(teamInfo)
     })
-    .then(pageHTML => {
-        return genFile(pageHTML)
-    })
+    // .then(pageHTML => {
+    //     return genFile(pageHTML)
+    // })
