@@ -31,17 +31,17 @@ const employeeArray = data => {
 
     for(let i = 0; i <data.length; i++) {
         let employee = data[i]
-        const title = employee.getRole()
+        const position = employee.getRole()
 
-        if(title === 'Supervisor') {
+        if(position === 'Supervisor') {
             const supervisorCard = genSupervisor(employee)
             objectArray.push(supervisorCard)
         }
-        if(title === 'Engineer') {
+        if(position === 'Engineer') {
             const engineerCard = genEngineer(employee)
             objectArray.push(engineerCard)
         }
-        if(title === 'Intern') {
+        if(position === 'Intern') {
             const internCard = genIntern(employee)
             objectArray.push(internCard)
         }

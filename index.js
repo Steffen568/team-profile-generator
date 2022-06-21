@@ -21,24 +21,24 @@ const genManager = () => {
         {
             type: 'input',
             name: 'id',
-            message: `Enter your supervisor's ID`
+            message: `Enter your ID`
         },
         {
             type: 'input',
             name: 'email',
-            message: `Enter your supervisor's email adress`
+            message: `Enter your email adress`
         },
         {
             type: 'input',
             name:'office',
-            message: `Enter your supervisors office number`
+            message: `Enter your office number`
         }
     ]).then(managerInfo => {
         const {name, id, email, office} = managerInfo
         const supervisor = new Supervisor(name, id, email, office)
 
         teamInfo.push(supervisor)
-        genEmployee()
+        // genEmployee()
         return teamInfo
     })
 }
@@ -46,7 +46,7 @@ const genManager = () => {
 const genEmployee = () => {
     return inquirer.prompt([
         {
-            type: 'checkbox',
+            type: 'list',
             name: 'position',
             message: `Select employee position`,
             choices:  [`Intern`, `Engineer`]
@@ -74,10 +74,10 @@ const genEmployee = () => {
             
         },
         {
-            when: (input) => input.position === 'Intern',
             type: 'input',
             name: 'school',
             message: `Enter school Inter is attending`,
+            when: (input) => input.position === 'Intern',
             
         },
         {
@@ -87,29 +87,29 @@ const genEmployee = () => {
             default: false
         }
     ]).then(employeeInfo => {
-        let {name, id, email, github, school, nextEmp}  = employeeInfo 
+        let {name, id, email, github, school, nextEmp, position}  = employeeInfo 
         let employee
 
-        if(employeeInfo.position === 'Engineer') {
+        if(position === 'Engineer') {
             employee = new Engineer (name, id, email, github)
-        } else if (employeeInfo.position === 'Intern') {
+        
+        } else if (position === 'Intern') {
             employee = new Intern (name, id, email, school)
         }
         
         teamInfo.push(employee)
 
-        if (employeeInfo.nextEmp) {
-            return genEmployee()
+        if (nextEmp) {
+            return genEmployee(teamInfo)
         } else {
-            genFile()
             return teamInfo
         }
         
     })
 }
 
-const genFile = fileContent => {
-    fs.writeFile('./dist/index.html', fileContent, err => {
+const genFile = data => {
+    fs.writeFile('./dist/index.html', data, err => {
         if (err) {
             console.log(`HTML GEN ERROR`)
         } else {
@@ -118,10 +118,22 @@ const genFile = fileContent => {
     })
 }
 
+// genManager()
+//     .then(teamInfo => {
+//         return employeeArray(teamInfo)
+//     })
+//     .then(pageHTML => {
+//         return genFile(pageHTML)
+//     })
+
 genManager()
-    .then(teamInfo => {
+    .then(genEmployee)
+    .then((teamInfo) => {
         return employeeArray(teamInfo)
     })
-    // .then(pageHTML => {
-    //     return genFile(pageHTML)
-    // })
+    .then((pageHTML) => {
+        return genFile(pageHTML)
+    })
+    .catch((err) => {
+        console.log(err)
+    })
