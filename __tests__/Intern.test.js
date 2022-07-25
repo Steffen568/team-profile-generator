@@ -12,7 +12,7 @@ it(`Returns Intern with employee properties and school`, () => {
 
 it(`Returns Intern object`, () => {
     const intern = new Intern(`sam`, `159`, `test@gmail.com`, `UT Austin`)
-    expect(intern.getRole()).toEqual(Intern)
+    expect(intern.getRole()).toEqual('Intern')
 })
 
 it(`Returns Intern's name`, () => {

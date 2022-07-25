@@ -11,7 +11,7 @@ it(`Returns employee obeject  with Manager office number`, () => {
 
 it(`Returns Manager`, () => {
     const manager = new Supervisor(`stan`, `456`, `test@gmail.com`, `10`)
-    expect(manager.getRole()).toEqual(Supervisor)
+    expect(manager.getRole()).toEqual('Supervisor')
 })
 
 it(`Returns Manager Name`, () => {

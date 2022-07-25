@@ -66,7 +66,7 @@ const genSupervisor = supervisor => {
                 Contact Email: ${supervisor.email}
             </p>
             <p>
-                Office Number: ${supervisor.office}
+                Office Number: ${supervisor.officeNumber}
             </p>
         </div>
         <footer class='w3-container w3-green'></footer>

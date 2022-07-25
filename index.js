@@ -30,7 +30,7 @@ const genManager = () => {
         },
         {
             type: 'input',
-            name:'office',
+            name:'officeNumber',
             message: `Enter your office number`
         }
     ]).then(managerInfo => {
@@ -113,7 +113,7 @@ const genFile = data => {
         if (err) {
             console.log(`HTML GEN ERROR`)
         } else {
-            console.log(`Your employee roster has been genereated! check index.html`)
+            console.log(`Your employee roster has been genereated! check index.html in the dist folder!`)
         }
     })
 }
